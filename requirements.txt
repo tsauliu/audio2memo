@@ -4,3 +4,4 @@ transformers
 funasr
 tiktoken
 pydub
+google-genai

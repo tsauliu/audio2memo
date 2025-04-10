@@ -100,8 +100,11 @@ def split_audio(input_file, output_dir, max_size_mb=25, max_duration_sec=1500):
     print(f"分割完成！共生成 {segments} 个文件，保存在 {output_dir}")
 
 if __name__ == "__main__":
-    input_file='./0_raw_audio/hype 交接1.m4a'
-    output_dir='./0_processed_audio'
+    project='hype 交接1'
+    input_file=f'./0_raw_audio/{project}.m4a'
+    output_dir=f'./0_processed_audio/{project}'
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     max_size=25
     max_duration=1500
     split_audio(input_file, output_dir, max_size, max_duration)

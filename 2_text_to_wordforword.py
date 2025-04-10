@@ -1,37 +1,27 @@
 #%%
-from openai import OpenAI
-from env import api_key_deepseek,model_id_deepseek
 import datetime
-from funcs import combine_transcripts,count_tokens
+from funcs import combine_transcripts,count_tokens,deepseek_model,gemini_model
 import os
 
-client = OpenAI(
-    base_url="https://ark.cn-beijing.volces.com/api/v3/bots",
-    api_key=api_key_deepseek
-)
 
 prompt=open('prompt/prompt_audio2word.md','r',encoding='utf-8').read()
 
-def summary(content):
-    completion = client.chat.completions.create(
-        model=model_id_deepseek,
-        messages=[
-        {"role": "system", "content": prompt},
-        {"role": "user", "content": content},
-    ],
-    )
-    return completion.choices[0].message.content
 
-filename='hype 交接1'
-combined_transcript=combine_transcripts(filename)
+project='hype 交接1'
+combined_transcript=combine_transcripts(project)
+transcript_length=len(combined_transcript)
+wordcountmin=round(transcript_length/2/1000)*1000
+wordcountmax=round(transcript_length/1000)*1000
+prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))
+print(prompt)
+print(f"Total input tokens: {count_tokens(prompt)+transcript_length}")
 
-print(f"Total input tokens: {count_tokens(prompt)+count_tokens(combined_transcript)}")
-
-summarytext=summary(combined_transcript)
+# summarytext=deepseek_model(prompt,combined_transcript)
+summarytext=gemini_model(prompt,combined_transcript)
 print(summarytext)
 
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-output_file = f"./2_wordforword/{filename}_{timestamp}.txt"
+output_file = f"./2_wordforword/{project}_{timestamp}.txt"
 
 with open(output_file, "w", encoding="utf-8") as f:
     f.write(summarytext)
