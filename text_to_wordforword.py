@@ -6,7 +6,7 @@ import os
 def text_to_wordforword(project):
     combined_transcript=combine_transcripts(project)
     transcript_length=len(combined_transcript)
-    wordcountmin=round(transcript_length/2/1000)*1000
+    wordcountmin=round(transcript_length/1.5/1000)*1000
     wordcountmax=round(transcript_length/1000)*1000
     prompt=open('prompt/prompt_audio2word.md','r',encoding='utf-8').read()
     prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))
