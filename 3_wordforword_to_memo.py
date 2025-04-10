@@ -2,13 +2,13 @@
 from openai import OpenAI
 import tiktoken
 from env import api_key_deepseek,model_id_deepseek
-
+import datetime
 client = OpenAI(
     base_url="https://ark.cn-beijing.volces.com/api/v3/bots",
     api_key=api_key_deepseek
 )
 
-prompt=open('prompt_auto2memo.md','r',encoding='utf-8').read()
+prompt=open('./prompt/prompt_word2memo.md','r',encoding='utf-8').read()
 
 def summary(content):
     completion = client.chat.completions.create(
@@ -20,7 +20,8 @@ def summary(content):
     )
     return completion.choices[0].message.content
 
-transcript=open('transcript.txt','r',encoding='utf-8').read()
+filename='test'
+transcript=open(f'./1_transcript/{filename}.txt','r',encoding='utf-8').read()
 
 # Calculate token count
 encoding = tiktoken.get_encoding("cl100k_base")
@@ -32,5 +33,8 @@ print(f"Total input tokens: {total_tokens}")
 summarytext=summary(transcript)
 print(summarytext)
 
-with open("memo.txt", "w", encoding="utf-8") as f:
+timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+output_file = f"./3_memo/{filename}_{timestamp}.txt"
+
+with open(output_file, "w", encoding="utf-8") as f:
     f.write(summarytext)
