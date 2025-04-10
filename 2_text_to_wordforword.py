@@ -1,8 +1,8 @@
 #%%
 from openai import OpenAI
-import tiktoken
 from env import api_key_deepseek,model_id_deepseek
 import datetime
+from funcs import combine_transcripts,count_tokens
 import os
 
 client = OpenAI(
@@ -22,20 +22,12 @@ def summary(content):
     )
     return completion.choices[0].message.content
 
-filename='test'
+filename='hype 交接1'
+combined_transcript=combine_transcripts(filename)
 
-transcript=open(f'./1_transcript/{filename}.txt','r',encoding='utf-8').read()
+print(f"Total input tokens: {count_tokens(prompt)+count_tokens(combined_transcript)}")
 
-# Calculate token count
-encoding = tiktoken.get_encoding("cl100k_base")
-prompt_tokens = encoding.encode(prompt)
-transcript_tokens = encoding.encode(transcript)
-total_tokens = len(prompt_tokens) + len(transcript_tokens)
-print(f"Total input tokens: {total_tokens}")
-
-print(prompt)
-
-summarytext=summary(transcript)
+summarytext=summary(combined_transcript)
 print(summarytext)
 
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
