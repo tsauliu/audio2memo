@@ -5,3 +5,5 @@ funasr
 tiktoken
 pydub
 google-genai
+pandas
+python-docx
