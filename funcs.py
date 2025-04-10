@@ -1,3 +1,4 @@
+#%%
 import os
 import tiktoken
 
@@ -6,7 +7,7 @@ def combine_transcripts(filename):
     combined_transcript = ""
     transcript_files = sorted(
         [f for f in os.listdir(f'./1_transcript/{filename}') if f.endswith('.txt')],
-        key=lambda x: int(x.split('_part')[1].split('_')[0]) if '_part' in x else 0
+        reverse=False
     )
 
     for file in transcript_files:
@@ -48,3 +49,9 @@ def gemini_model(prompt,content):
         model="gemini-2.5-pro-preview-03-25", contents=prompt+'/'+content
     )
     return response.text
+
+if __name__ == '__main__':
+    project='grab交接'
+    combined_transcript=combine_transcripts(project)
+    print(combined_transcript)
+    pass
