@@ -9,6 +9,7 @@ def combine_transcripts(filename):
         [f for f in os.listdir(f'./1_transcript/{filename}') if f.endswith('.txt')],
         reverse=False
     )
+    print(transcript_files)
 
     for file in transcript_files:
         with open(f'./1_transcript/{filename}/{file}', 'r', encoding='utf-8') as f:

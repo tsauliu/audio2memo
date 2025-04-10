@@ -1,7 +1,7 @@
 from process_audio import split_audio
 import os
 
-project='hype 交接2'
+project='科辉智药-刘博士'
 
 # process audio
 input_file=f'./0_raw_audio/{project}.m4a'
