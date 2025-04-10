@@ -1,5 +1,6 @@
 #%%
 from openai import OpenAI
+import tiktoken
 from env import api_key_deepseek,model_id_deepseek
 
 client = OpenAI(
@@ -20,6 +21,13 @@ def summary(content):
     return completion.choices[0].message.content
 
 transcript=open('transcript.txt','r',encoding='utf-8').read()
+
+# Calculate token count
+encoding = tiktoken.get_encoding("cl100k_base")
+prompt_tokens = encoding.encode(prompt)
+transcript_tokens = encoding.encode(transcript)
+total_tokens = len(prompt_tokens) + len(transcript_tokens)
+print(f"Total input tokens: {total_tokens}")
 
 summarytext=summary(transcript)
 print(summarytext)

@@ -3,8 +3,8 @@
 login.sh
 env.py
 __pycache__
-txt
 .env
 __pycache__/
 *.pyc
 transcript.txt
+*.txt
