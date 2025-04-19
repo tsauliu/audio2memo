@@ -47,7 +47,7 @@ def process_audio_files(project):
         print(f"Error: Audio folder not found at {audio_folder}")
         return
 
-    audio_files = [filename for filename in os.listdir(audio_folder) if filename.endswith('.m4a')]
+    audio_files = [filename for filename in os.listdir(audio_folder)]
 
     if not audio_files:
         print(f"No .m4a files found in {audio_folder}")

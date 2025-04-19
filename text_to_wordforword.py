@@ -12,6 +12,7 @@ def text_to_wordforword(project):
     prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))
     print(f"Wordforword Total input tokens: {count_tokens(prompt)+transcript_length}")
     # summarytext=deepseek_model(prompt,combined_transcript)
+    print(prompt)
     summarytext=gemini_model(prompt,combined_transcript)
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -21,5 +22,6 @@ def text_to_wordforword(project):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    project='grab交接'
+    project='sharing- hualiang - 印度客户'
     text_to_wordforword(project)
+#%%

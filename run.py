@@ -1,10 +1,11 @@
 from process_audio import split_audio
 import os
 
-project='科辉智药-刘博士'
+project='地平线发布会0418'
+filetype='mp3'
 
 # process audio
-input_file=f'./0_raw_audio/{project}.m4a'
+input_file=f'./0_raw_audio/{project}.{filetype}'
 output_dir=f'./0_processed_audio/{project}'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
