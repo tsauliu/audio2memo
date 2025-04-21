@@ -1,9 +1,23 @@
+#%%
 from process_audio import split_audio
 import os
+import shutil
 
-project='地平线发布会0418'
+project='catl 4 21 发布会'
 filetype='mp3'
 
+#copyfile
+dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
+dropbox_path=os.path.expanduser(dropbox_path)
+raw_audio_path=f'./0_raw_audio/{project}.{filetype}'
+os.makedirs(os.path.dirname('./0_raw_audio/'), exist_ok=True)
+if os.path.exists(dropbox_path) and not os.path.exists(raw_audio_path):
+    shutil.copyfile(dropbox_path, raw_audio_path)
+    print(f'{project}.{filetype} copied to {raw_audio_path}')
+else:
+    print(f'{project}.{filetype} already exists in {raw_audio_path}')
+
+#%%
 # process audio
 input_file=f'./0_raw_audio/{project}.{filetype}'
 output_dir=f'./0_processed_audio/{project}'

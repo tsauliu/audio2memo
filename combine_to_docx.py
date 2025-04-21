@@ -1,6 +1,7 @@
 # combine the summary and detailed news into a docx file
 # %%
 from docx import Document
+import shutil
 import os
 
 def combine_to_docx(project):
@@ -33,6 +34,8 @@ def combine_to_docx(project):
             doc.add_paragraph(line.replace('### ',''), style='contentlist')
 
     doc.save(f'./4_docx/{project}.docx')
+    shutil.copyfile(f'./4_docx/{project}.docx', f'~/Dropbox/VoiceMemos/{project}.docx')
+
 
 if __name__ == '__main__':
     project='grab交接'
