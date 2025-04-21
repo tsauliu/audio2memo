@@ -51,8 +51,26 @@ def gemini_model(prompt,content):
     )
     return response.text
 
+def feishu_bot(message):
+    import requests
+    import json
+    
+    payload_message = {
+        "msg_type": "text",
+        "content": {
+            "text": message
+            }
+        }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+
+    # 定义飞书机器人 URL
+    url = "https://open.feishu.cn/open-apis/bot/v2/hook/36473a8e-3bf1-40bd-9115-3385e314bf74"  # 替换为你的飞书机器人 URL
+    response = requests.request("POST", url, headers=headers, data=json.dumps(payload_message))
+    return response.text
+
 if __name__ == '__main__':
-    project='grab交接'
-    combined_transcript=combine_transcripts(project)
-    print(combined_transcript)
+    message = '测试'
+    feishu_bot(message)
     pass

@@ -34,9 +34,11 @@ def combine_to_docx(project):
             doc.add_paragraph(line.replace('### ',''), style='contentlist')
 
     doc.save(f'./4_docx/{project}.docx')
-    shutil.copyfile(f'./4_docx/{project}.docx', f'~/Dropbox/VoiceMemos/{project}.docx')
+    dest_path=f'~/Dropbox/VoiceMemos/{project}.docx'
+    dest_path=os.path.expanduser(dest_path)
+    shutil.copyfile(f'./4_docx/{project}.docx', dest_path)
 
 
 if __name__ == '__main__':
-    project='grab交接'
+    project='catl 4 21 发布会'
     combine_to_docx(project)
