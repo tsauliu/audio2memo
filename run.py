@@ -13,11 +13,21 @@ input_filename = input("Enter the filename (e.g., 'project name.mp3'): ")
 project = input_filename.rsplit('.', 1)[0]
 filetype = input_filename.rsplit('.', 1)[1]
 
-input_refresh=input('refresh? (y/n): ')
-if input_refresh=='y':
-    input_refresh=True
-else:
-    input_refresh=False
+# input_refresh=input('refresh? (y/n): ')
+# if input_refresh=='y':
+#     input_refresh=True
+# else:
+#     input_refresh=False
+
+input_refresh=True
+input_model=input('model? (1.GPT-4o-mini-transcribe, 2.GPT-4o-transcribe, 3.Whisper-1): ')
+
+if input_model==1:
+    input_model='gpt-4o-mini-transcribe'
+elif input_model==2:
+    input_model='gpt-4o-transcribe'
+elif input_model==3:
+    input_model='whisper-1'
 
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
@@ -51,7 +61,7 @@ if input_refresh:
     feishu_bot(f'transcript for {project}.{filetype} removed')
 
 if not os.path.exists(f'{base_path}/1_transcript/{project}'):
-    process_audio_files(project)
+    process_audio_files(project, input_model)
     feishu_bot(f'transcript for {project}.{filetype} processed')
 
 # text to wordforword

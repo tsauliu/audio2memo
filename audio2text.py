@@ -7,7 +7,7 @@ client = OpenAI(
     api_key=keysecret
 )
 
-def audio2text(filename, project, client):
+def audio2text(filename, project, client, input_model):
     audio_filepath = os.path.join("./0_processed_audio", project, filename)
     transcript_dir = os.path.join("./1_transcript", project)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -16,7 +16,7 @@ def audio2text(filename, project, client):
     try:
         with open(audio_filepath, "rb") as audio_file:
             transcript = client.audio.transcriptions.create(
-                model="whisper-1", #gpt-4o-mini-transcribe / gpt-4o-transcribe / whisper-1
+                model=input_model, #gpt-4o-mini-transcribe / gpt-4o-transcribe / whisper-1
                 file=audio_file
             )
         
@@ -29,7 +29,7 @@ def audio2text(filename, project, client):
         print(f"An error occurred while processing {filename}: {e}")
 
 
-def process_audio_files(project):
+def process_audio_files(project, input_model):
     """
     Processes all .m4a audio files in the specified project's processed_audio folder,
     transcribes them using OpenAI API, and saves the transcriptions.
@@ -57,7 +57,7 @@ def process_audio_files(project):
 
     # Process files sequentially
     for filename in audio_files:
-        audio2text(filename, project, client) # Pass client if needed
+        audio2text(filename, project, client, input_model) # Pass client if needed
 
     timeend = datetime.datetime.now()
     print(f'End time: {timeend}')
@@ -66,4 +66,5 @@ def process_audio_files(project):
 # Example usage:
 if __name__ == "__main__":
     project_name = 'catl 4 21 发布会'
-    process_audio_files(project_name)
+    input_model='gpt-4o-mini-transcribe'
+    process_audio_files(project_name, input_model)
