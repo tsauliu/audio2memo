@@ -4,6 +4,11 @@ from funcs import feishu_bot
 import os
 import shutil
 
+base_path=f'~/audio2memo/'
+base_path=os.path.expanduser(base_path)
+
+#%%
+
 input_filename = input("Enter the filename (e.g., 'project name.mp3'): ")
 project = input_filename.rsplit('.', 1)[0]
 filetype = input_filename.rsplit('.', 1)[1]
@@ -17,6 +22,8 @@ else:
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
 dropbox_path=os.path.expanduser(dropbox_path)
+
+
 raw_audio_path=f'./0_raw_audio/{project}.{filetype}'
 os.makedirs(os.path.dirname('./0_raw_audio/'), exist_ok=True)
 if os.path.exists(dropbox_path) and not os.path.exists(raw_audio_path):
@@ -39,29 +46,35 @@ if not os.path.exists(output_dir):
 # audio to text
 
 from audio2text import process_audio_files
-if not os.path.exists(f'./1_transcript/{project}') or input_refresh:
+if input_refresh:
+    shutil.rmtree(f'{base_path}/1_transcript/{project}')
+    feishu_bot(f'transcript for {project}.{filetype} removed')
+
+if not os.path.exists(f'{base_path}/1_transcript/{project}'):
     process_audio_files(project)
     feishu_bot(f'transcript for {project}.{filetype} processed')
+
 # text to wordforword
 from text_to_wordforword import text_to_wordforword
 os.makedirs('./2_wordforword/', exist_ok=True)
 current_files=[f for f in os.listdir('./2_wordforword/') if f.startswith(project)]
-if len(current_files)==0 or input_refresh:
+if not len(current_files)==0 or input_refresh:
     text_to_wordforword(project)
-    feishu_bot(f'wordforword for {project}.{filetype} processed')
+    # feishu_bot(f'wordforword for {project}.{filetype} processed')
 
 # wordforword to memo
 from wordforword_to_memo import wordforword_to_memo
-os.makedirs('./3_memo/', exist_ok=True)
-current_files=[f for f in os.listdir('./3_memo/') if f.startswith(project)]
+os.makedirs(f'{base_path}/3_memo/', exist_ok=True)
+current_files=[f for f in os.listdir(f'{base_path}/3_memo/') if f.startswith(project)]
+
 if len(current_files)==0 or input_refresh:
     wordforword_to_memo(project)
-    feishu_bot(f'memo for {project}.{filetype} processed')
+    # feishu_bot(f'memo for {project}.{filetype} processed')
 
 # combine to docx
 from combine_to_docx import combine_to_docx
-os.makedirs('./4_docx/', exist_ok=True)
-current_files=[f for f in os.listdir('./4_docx/') if f.startswith(project)]
+os.makedirs(f'{base_path}/4_docx/', exist_ok=True)
+current_files=[f for f in os.listdir(f'{base_path}/4_docx/') if f.startswith(project)]
 if len(current_files)==0 or input_refresh:
     combine_to_docx(project)
     feishu_bot(f'docx for {project}.{filetype} processed')

@@ -16,7 +16,7 @@ def audio2text(filename, project, client):
     try:
         with open(audio_filepath, "rb") as audio_file:
             transcript = client.audio.transcriptions.create(
-                model="gpt-4o-transcribe", #gpt-4o-mini-transcribe / gpt-4o-transcribe
+                model="whisper-1", #gpt-4o-mini-transcribe / gpt-4o-transcribe / whisper-1
                 file=audio_file
             )
         
