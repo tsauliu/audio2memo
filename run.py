@@ -31,13 +31,13 @@ filetype = filename.rsplit('.', 1)[1]
 #     input_refresh=False
 
 input_refresh=True
-input_model=input('model? (1.GPT-4o-mini-transcribe, 2.GPT-4o-transcribe, 3.Whisper-1): ')
-
-if input_model==1:
+input_model_num=input('model? (1.GPT-4o-mini-transcribe, 2.GPT-4o-transcribe, 3.Whisper-1): ')
+input_model_num=int(input_model_num)
+if input_model_num==1:
     input_model='gpt-4o-mini-transcribe'
-elif input_model==2:
+elif input_model_num==2:
     input_model='gpt-4o-transcribe'
-elif input_model==3:
+elif input_model_num==3:
     input_model='whisper-1'
 
 #copyfile
@@ -67,7 +67,7 @@ if not os.path.exists(output_dir):
 # audio to text
 
 from audio2text import process_audio_files
-if input_refresh:
+if input_refresh and os.path.exists(f'{base_path}/1_transcript/{project}'):
     shutil.rmtree(f'{base_path}/1_transcript/{project}')
     feishu_bot(f'transcript for {project}.{filetype} removed')
 
