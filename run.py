@@ -4,8 +4,9 @@ from funcs import feishu_bot
 import os
 import shutil
 
-project='catl 4 21 发布会'
-filetype='mp3'
+input_filename = input("Enter the filename (e.g., 'project name.mp3'): ")
+project = input_filename.rsplit('.', 1)[0]
+filetype = input_filename.rsplit('.', 1)[1]
 
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
