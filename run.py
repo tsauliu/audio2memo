@@ -7,11 +7,22 @@ import shutil
 base_path=f'~/audio2memo/'
 base_path=os.path.expanduser(base_path)
 
+allfiles=os.listdir(os.path.expanduser(f'~/Dropbox/VoiceMemos/'))
+# 按照修改时间排序文件，过滤掉.docx文件
+allfiles = [f for f in allfiles if not f.endswith('.docx')]
+allfiles.sort(key=lambda f: os.path.getmtime(os.path.join(os.path.expanduser('~/Dropbox/VoiceMemos/'), f)), reverse=True)
+for i in range(len(allfiles)):
+    print(f'{i+1}. {allfiles[i]}')
+
+input_filename = input("Enter the number (e.g., '1'): ")
+filename=allfiles[int(input_filename)-1]
+print(f'processing {filename}')
+project = filename.rsplit('.', 1)[0]
+filetype = filename.rsplit('.', 1)[1]
+
 #%%
 
-input_filename = input("Enter the filename (e.g., 'project name.mp3'): ")
-project = input_filename.rsplit('.', 1)[0]
-filetype = input_filename.rsplit('.', 1)[1]
+
 
 # input_refresh=input('refresh? (y/n): ')
 # if input_refresh=='y':
