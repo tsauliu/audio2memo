@@ -8,6 +8,12 @@ input_filename = input("Enter the filename (e.g., 'project name.mp3'): ")
 project = input_filename.rsplit('.', 1)[0]
 filetype = input_filename.rsplit('.', 1)[1]
 
+input_refresh=input('refresh? (y/n): ')
+if input_refresh=='y':
+    input_refresh=True
+else:
+    input_refresh=False
+
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
 dropbox_path=os.path.expanduser(dropbox_path)
@@ -33,14 +39,14 @@ if not os.path.exists(output_dir):
 # audio to text
 
 from audio2text import process_audio_files
-if not os.path.exists(f'./1_transcript/{project}'):
+if not os.path.exists(f'./1_transcript/{project}') or input_refresh:
     process_audio_files(project)
     feishu_bot(f'transcript for {project}.{filetype} processed')
 # text to wordforword
 from text_to_wordforword import text_to_wordforword
 os.makedirs('./2_wordforword/', exist_ok=True)
 current_files=[f for f in os.listdir('./2_wordforword/') if f.startswith(project)]
-if len(current_files)==0:
+if len(current_files)==0 or input_refresh:
     text_to_wordforword(project)
     feishu_bot(f'wordforword for {project}.{filetype} processed')
 
@@ -48,7 +54,7 @@ if len(current_files)==0:
 from wordforword_to_memo import wordforword_to_memo
 os.makedirs('./3_memo/', exist_ok=True)
 current_files=[f for f in os.listdir('./3_memo/') if f.startswith(project)]
-if len(current_files)==0:
+if len(current_files)==0 or input_refresh:
     wordforword_to_memo(project)
     feishu_bot(f'memo for {project}.{filetype} processed')
 
@@ -56,6 +62,6 @@ if len(current_files)==0:
 from combine_to_docx import combine_to_docx
 os.makedirs('./4_docx/', exist_ok=True)
 current_files=[f for f in os.listdir('./4_docx/') if f.startswith(project)]
-if len(current_files)==0:
+if len(current_files)==0 or input_refresh:
     combine_to_docx(project)
     feishu_bot(f'docx for {project}.{filetype} processed')

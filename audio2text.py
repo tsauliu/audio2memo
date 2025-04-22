@@ -65,5 +65,5 @@ def process_audio_files(project):
 
 # Example usage:
 if __name__ == "__main__":
-    project_name = 'hype 交接2' 
+    project_name = 'catl 4 21 发布会'
     process_audio_files(project_name)
