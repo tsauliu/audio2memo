@@ -36,16 +36,17 @@ filetype = filename.rsplit('.', 1)[1]
 
 input_refresh=True
 input_model_num=input('model? (1.GPT-4o-transcribe (default), 2.GPT-4o-mini-transcribe, 3.Whisper-1): ')
-input_model_num=int(input_model_num)
-if input_model_num==1:
-    input_model='gpt-4o-transcribe'
-elif input_model_num==2:
-    input_model='gpt-4o-mini-transcribe'
-elif input_model_num==3:
-    input_model='whisper-1'
-else:
-    input_model='gpt-4o-transcribe'
 
+if input_model_num=='':
+    input_model_num=1
+else:
+    input_model_num=int(input_model_num)
+    if input_model_num==1:
+        input_model='gpt-4o-transcribe'
+    elif input_model_num==2:
+        input_model='gpt-4o-mini-transcribe'
+    elif input_model_num==3:
+        input_model='whisper-1'
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
 dropbox_path=os.path.expanduser(dropbox_path)
