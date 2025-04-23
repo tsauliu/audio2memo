@@ -3,6 +3,9 @@
 from docx import Document
 import shutil
 import os
+import datetime
+
+todaydate=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
 def combine_to_docx(project):
     doc = Document('memo_template.docx')
@@ -33,10 +36,11 @@ def combine_to_docx(project):
         elif len(line) > 20:
             doc.add_paragraph(line.replace('### ',''), style='contentlist')
 
-    doc.save(f'./4_docx/{project}.docx')
-    dest_path=f'~/Dropbox/VoiceMemos/{project}.docx'
+    filename=f'{project} {todaydate}.docx'
+    doc.save(f'./4_docx/{filename}')
+    dest_path=f'~/Dropbox/VoiceMemos/{filename}'
     dest_path=os.path.expanduser(dest_path)
-    shutil.copyfile(f'./4_docx/{project}.docx', dest_path)
+    shutil.copyfile(f'./4_docx/{filename}', dest_path)
 
 
 if __name__ == '__main__':
