@@ -15,6 +15,10 @@ for i in range(len(allfiles)):
     print(f'{i+1}. {allfiles[i]}')
 
 input_filename = input("Enter the number (e.g., '1'): ")
+
+if input_filename=='':
+    input_filename=1
+
 filename=allfiles[int(input_filename)-1]
 print(f'processing {filename}')
 project = filename.rsplit('.', 1)[0]
@@ -31,14 +35,16 @@ filetype = filename.rsplit('.', 1)[1]
 #     input_refresh=False
 
 input_refresh=True
-input_model_num=input('model? (1.GPT-4o-mini-transcribe, 2.GPT-4o-transcribe, 3.Whisper-1): ')
+input_model_num=input('model? (1.GPT-4o-transcribe (default), 2.GPT-4o-mini-transcribe, 3.Whisper-1): ')
 input_model_num=int(input_model_num)
 if input_model_num==1:
-    input_model='gpt-4o-mini-transcribe'
-elif input_model_num==2:
     input_model='gpt-4o-transcribe'
+elif input_model_num==2:
+    input_model='gpt-4o-mini-transcribe'
 elif input_model_num==3:
     input_model='whisper-1'
+else:
+    input_model='gpt-4o-transcribe'
 
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
