@@ -41,12 +41,13 @@ if input_model_num=='':
     input_model_num=1
 else:
     input_model_num=int(input_model_num)
-    if input_model_num==1:
-        input_model='gpt-4o-transcribe'
-    elif input_model_num==2:
-        input_model='gpt-4o-mini-transcribe'
-    elif input_model_num==3:
-        input_model='whisper-1'
+
+if input_model_num==1:
+    input_model='gpt-4o-transcribe'
+elif input_model_num==2:
+    input_model='gpt-4o-mini-transcribe'
+elif input_model_num==3:
+    input_model='whisper-1'
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
 dropbox_path=os.path.expanduser(dropbox_path)
