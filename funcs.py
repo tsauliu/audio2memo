@@ -70,7 +70,34 @@ def feishu_bot(message):
     response = requests.request("POST", url, headers=headers, data=json.dumps(payload_message))
     return response.text
 
+
+import boto3
+from env import oss_key,oss_access,bucket_name
+
+def save_transcript_to_oss(filepath,filename):
+    # try:
+    if True:
+        # 设置腾讯云COS的连接信息
+        s3_client = boto3.client(
+            's3',
+            region_name='ap-beijing',  # 替换为您的存储桶所在地区
+            aws_access_key_id=oss_key,  # 替换为您的access key
+            aws_secret_access_key=oss_access,  # 替换为您的secret key
+            config=boto3.session.Config(s3={'addressing_style': 'virtual'}),
+            endpoint_url='https://cos.ap-beijing.myqcloud.com'  # 替换为对应地区的endpoint
+        )
+
+        # 上传文件
+        s3_client.upload_file(
+            Filename=f'{filepath}',
+            Bucket=bucket_name,
+            Key=f'/CallNotes/{filename}'
+        )
+        
+    # except Exception as e:
+    #     print(e)
+
 if __name__ == '__main__':
-    message = '测试'
-    feishu_bot(message)
+    filename = '宁德 商务 0423 2025-04-27 21:10.md'
+    save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}'),f'宁德 商务 04231.md')
     pass

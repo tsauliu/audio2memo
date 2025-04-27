@@ -8,3 +8,4 @@ google-genai
 pandas
 python-docx
 dropbox
+boto3

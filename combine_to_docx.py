@@ -4,7 +4,7 @@ from docx import Document
 import shutil
 import os
 import datetime
-
+from funcs import save_transcript_to_oss
 todaydate=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
 def combine_to_docx(project):
@@ -36,13 +36,28 @@ def combine_to_docx(project):
         elif len(line) > 20:
             doc.add_paragraph(line.replace('### ',''), style='contentlist')
 
-    filename=f'{project} {todaydate}.docx'
-    doc.save(f'./4_docx/{filename}')
-    dest_path=f'~/Dropbox/VoiceMemos/{filename}'
+    filename=f'{project} {todaydate}'
+    doc.save(f'./4_docx/{filename}.docx')
+    dest_path=f'~/Dropbox/VoiceMemos/{filename}.docx'
     dest_path=os.path.expanduser(dest_path)
-    shutil.copyfile(f'./4_docx/{filename}', dest_path)
+    shutil.copyfile(f'./4_docx/{filename}.docx', dest_path)
 
-
+    with open(f'./5_markdown/{filename}.md', 'w') as file:
+        file.write(f'# Key takeaways\n')
+        lines = summary_md.strip().split('\n')
+        for line in lines:
+            if line.startswith('# '):
+                file.write(line.replace('# ','## ')+'\n')
+            elif line.startswith('## '):
+                file.write(line.replace('## ','### ')+'\n')
+            elif line.startswith('### '):
+                file.write(line.replace('### ','- ')+'\n')
+            else:
+                file.write(line+'\n')
+        file.write(f'\n# Full Discussion\n')
+        file.write(raw_md)
+        save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}.md'),f'{project}.md')
+        
 if __name__ == '__main__':
-    project='ken call catl2'
+    project='Xpeng call 0432'
     combine_to_docx(project)
