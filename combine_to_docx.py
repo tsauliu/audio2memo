@@ -59,5 +59,5 @@ def combine_to_docx(project):
         save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}.md'),f'{project}.md')
         
 if __name__ == '__main__':
-    project='Xpeng call 0432'
+    project='sharing lantian 老铺黄金'
     combine_to_docx(project)

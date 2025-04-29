@@ -9,6 +9,7 @@ def text_to_wordforword(project):
     wordcountmin=round(transcript_length/1.5/1000)*1000
     wordcountmax=round(transcript_length/1000)*1000
     prompt=open('prompt/prompt_audio2word.md','r',encoding='utf-8').read()
+    # prompt=open('prompt/prompt_audio2word_gemini.md','r',encoding='utf-8').read()
     prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))
     print(f"Wordforword Total input tokens: {count_tokens(prompt)+transcript_length}")
     # summarytext=deepseek_model(prompt,combined_transcript)
@@ -22,6 +23,6 @@ def text_to_wordforword(project):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    project='sharing- hualiang - 印度客户'
+    project='地平线cfo'
     text_to_wordforword(project)
 #%%
