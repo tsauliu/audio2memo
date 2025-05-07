@@ -1,4 +1,5 @@
-#%%
+# %%
+
 import os
 import tiktoken
 
@@ -16,6 +17,7 @@ def combine_transcripts(filename):
             combined_transcript += f.read() + "\n\n"
     return combined_transcript
 
+# %%
 def count_tokens(text):
     encoding = tiktoken.get_encoding("cl100k_base")
     return len(encoding.encode(text))
@@ -47,7 +49,7 @@ client = genai.Client(api_key=gemini_key)
 
 def gemini_model(prompt,content):
     response = client.models.generate_content(
-        model="gemini-2.5-pro-preview-03-25", contents=prompt+'\n -- \n'+content
+        model="gemini-2.5-pro-preview-03-25", contents=prompt+'\n -- \n'+content #gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25
     )
     return response.text
 
@@ -98,6 +100,4 @@ def save_transcript_to_oss(filepath,filename):
     #     print(e)
 
 if __name__ == '__main__':
-    filename = '宁德 商务 0423 2025-04-27 21:10.md'
-    save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}'),f'宁德 商务 04231.md')
-    pass
+    combine_transcripts(filename='catl jpm')

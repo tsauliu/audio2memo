@@ -17,3 +17,6 @@ def wordforword_to_memo(project):
 
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(summarytext)
+
+if __name__ == '__main__':
+    wordforword_to_memo(project='catl jpm')

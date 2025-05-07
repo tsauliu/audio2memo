@@ -23,6 +23,6 @@ def text_to_wordforword(project):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    project='地平线cfo'
+    project='catl gs'
     text_to_wordforword(project)
 #%%
