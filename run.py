@@ -88,8 +88,8 @@ if not os.path.exists(output_dir):
 # audio to text
 
 from audio2text import process_audio_files
-if input_refresh and os.path.exists(f'{base_path}/1_transcript/{project}'):
-    shutil.rmtree(f'{base_path}/1_transcript/{project}')
+# if input_refresh and os.path.exists(f'{base_path}/1_transcript/{project}'):
+#     shutil.rmtree(f'{base_path}/1_transcript/{project}')
     # feishu_bot(f'transcript for {project}.{filetype} removed')
 
 if not os.path.exists(f'{base_path}/1_transcript/{project}'):
