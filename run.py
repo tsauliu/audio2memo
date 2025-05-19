@@ -24,6 +24,18 @@ print(f'processing {filename}')
 project = filename.rsplit('.', 1)[0]
 filetype = filename.rsplit('.', 1)[1]
 
+# Input context
+input_context = input("Enter context (press Enter to skip): ")
+context_dir = f'{base_path}/context/'
+os.makedirs(context_dir, exist_ok=True)
+context_file = f'{context_dir}/{project}.md'
+
+with open(context_file, 'w', encoding='utf-8') as f:
+    f.write(f'## 上下文信息：录音中出现的名称（人名、地名、组织名）、地点、时间、事件等\n\n')
+    f.write(input_context)
+
+feishu_bot(f'Context markdown for {project} generated at {context_file}')
+
 #%%
 
 
@@ -51,6 +63,7 @@ elif input_model_num==3:
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
 dropbox_path=os.path.expanduser(dropbox_path)
+
 
 
 raw_audio_path=f'./0_raw_audio/{project}.{filetype}'
