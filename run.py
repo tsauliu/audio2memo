@@ -7,24 +7,21 @@ import shutil
 base_path=f'~/audio2memo/'
 base_path=os.path.expanduser(base_path)
 
+# choose audio file
 allfiles=os.listdir(os.path.expanduser(f'~/Dropbox/VoiceMemos/'))
-# 按照修改时间排序文件，过滤掉.docx文件
 allfiles = [f for f in allfiles if f.endswith(('.m4a', '.mp3'))]
 allfiles.sort(key=lambda f: os.path.getmtime(os.path.join(os.path.expanduser('~/Dropbox/VoiceMemos/'), f)), reverse=True)
 for i in range(len(allfiles)):
     print(f'{i+1}. {allfiles[i]}')
-
 input_filename = input("Enter the number (e.g., '1'): ")
-
 if input_filename=='':
     input_filename=1
-
 filename=allfiles[int(input_filename)-1]
 print(f'processing {filename}')
 project = filename.rsplit('.', 1)[0]
 filetype = filename.rsplit('.', 1)[1]
 
-# Input context
+# choose context file
 allcontexts = os.listdir(f'{base_path}/context/')
 allcontexts = [f for f in allcontexts if f.endswith('.md')]
 allcontexts.sort()
@@ -33,6 +30,17 @@ for i in range(len(allcontexts)):
 
 input_context = input("Enter context number (press Enter to skip): ")
 context_file = f'{base_path}/context/{allcontexts[int(input_context)-1]}' if input_context else f'{base_path}/context/default.md'
+
+# choose prompt file
+allprompts = os.listdir(f'{base_path}/prompt/')
+allprompts = [f for f in allprompts if f.endswith('.md') and not f.startswith('prompt_highlevel')]
+allprompts.sort()
+
+for i in range(len(allprompts)):
+    print(f'{i+1}. {allprompts[i]}')
+
+input_prompt = input("Enter prompt number (press Enter to skip): ")
+prompt_file = f'{base_path}/prompt/{allprompts[int(input_prompt)-1]}' if input_prompt else f'{base_path}/prompt/prompt_meetingmemo.md'
 
 #%%
 
@@ -108,7 +116,7 @@ os.makedirs(f'{base_path}/3_memo/', exist_ok=True)
 current_files=[f for f in os.listdir(f'{base_path}/3_memo/') if f.startswith(project)]
 
 if len(current_files)==0 or input_refresh:
-    wordforword_to_memo(project,context_file)
+    wordforword_to_memo(project,context_file,promptfile)
     # feishu_bot(f'memo for {project}.{filetype} processed')
 
 # combine to docx

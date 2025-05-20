@@ -8,7 +8,7 @@ from funcs import save_transcript_to_oss
 todaydate=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
 def combine_to_docx(project):
-    doc = Document('memo_template.docx')
+    doc = Document('formart_new.docx')
     summary_md=open(next((f'./3_memo/{f}' for f in sorted(os.listdir('./3_memo/'), reverse=True) if f.startswith(project)), f'./3_memo/{project}.txt'), 'r', encoding='utf-8').read()
     lines = summary_md.strip().split('\n')
     for line in lines:
@@ -33,6 +33,12 @@ def combine_to_docx(project):
             doc.add_paragraph(line.replace('# ',''), style='title1')
         elif line.startswith('## '):
             doc.add_paragraph(line.replace('## ',''), style='title2')
+        elif line.startswith('%'):
+            doc.add_paragraph(line.replace('%',''), style='boldcontent')
+        elif line.startswith('$'):
+            doc.add_paragraph(line.replace('$',''), style='nameformat')
+        elif line.startswith('&'):
+            doc.add_paragraph(line.replace('&',''), style='normaltranscript')
         elif len(line) > 20:
             doc.add_paragraph(line.replace('### ',''), style='contentlist')
 
@@ -59,5 +65,5 @@ def combine_to_docx(project):
         save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}.md'),f'{project}.md')
         
 if __name__ == '__main__':
-    project='pony'
+    project='pony 4q24 earnings'
     combine_to_docx(project)

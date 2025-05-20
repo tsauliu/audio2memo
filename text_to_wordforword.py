@@ -3,12 +3,12 @@ import datetime
 from funcs import combine_transcripts,count_tokens,deepseek_model,gemini_model
 import os
 
-def text_to_wordforword(project,contextfile):
+def text_to_wordforword(project,contextfile,promptfile):
     combined_transcript=combine_transcripts(project)
     transcript_length=len(combined_transcript)
     wordcountmin=round(transcript_length/1.5/1000)*1000
     wordcountmax=round(transcript_length/1000)*1000
-    prompt=open('prompt/prompt_meetingmemo.md','r',encoding='utf-8').read()
+    prompt=open(promptfile,'r',encoding='utf-8').read()
     context=open(contextfile,'r',encoding='utf-8').read()
     # prompt=open('prompt/prompt_audio2word_gemini.md','r',encoding='utf-8').read()
     prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))+context
@@ -24,6 +24,8 @@ def text_to_wordforword(project,contextfile):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    project='pony'
-    text_to_wordforword(project)
+    project='pony 4q24 earnings'
+    contextfile='context/auto.md'
+    promptfile='prompt/prompt_earningscall.md'
+    text_to_wordforword(project,contextfile,promptfile)
 #%%
