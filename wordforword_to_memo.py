@@ -4,10 +4,10 @@ from funcs import combine_transcripts,count_tokens,deepseek_model,gemini_model
 
 
 
-def wordforword_to_memo(project):
+def wordforword_to_memo(project,contextfile):
     combined_transcript=combine_transcripts(project)
     prompt=open('./prompt/prompt_highlevelsummary.md','r',encoding='utf-8').read()
-    context=open(f'context/{project}.md','r',encoding='utf-8').read()
+    context=open(contextfile,'r',encoding='utf-8').read()
     
     print(f"Memo Total input tokens: {count_tokens(prompt)+count_tokens(combined_transcript)}")
     print(prompt+context)

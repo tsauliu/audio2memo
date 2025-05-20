@@ -25,16 +25,14 @@ project = filename.rsplit('.', 1)[0]
 filetype = filename.rsplit('.', 1)[1]
 
 # Input context
-input_context = input("Enter context (press Enter to skip): ")
-context_dir = f'{base_path}/context/'
-os.makedirs(context_dir, exist_ok=True)
-context_file = f'{context_dir}/{project}.md'
+allcontexts = os.listdir(f'{base_path}/context/')
+allcontexts = [f for f in allcontexts if f.endswith('.md')]
+allcontexts.sort()
+for i in range(len(allcontexts)):
+    print(f'{i+1}. {allcontexts[i]}')
 
-with open(context_file, 'w', encoding='utf-8') as f:
-    f.write(f'## 上下文信息：录音中出现的名称（人名、地名、组织名）、地点、时间、事件等\n\n')
-    f.write(input_context)
-
-feishu_bot(f'Context markdown for {project} generated at {context_file}')
+input_context = input("Enter context number (press Enter to skip): ")
+context_file = f'{base_path}/context/{allcontexts[int(input_context)-1]}' if input_context else f'{base_path}/context/default.md'
 
 #%%
 
@@ -101,7 +99,7 @@ from text_to_wordforword import text_to_wordforword
 os.makedirs('./2_wordforword/', exist_ok=True)
 current_files=[f for f in os.listdir('./2_wordforword/') if f.startswith(project)]
 if not len(current_files)==0 or input_refresh:
-    text_to_wordforword(project)
+    text_to_wordforword(project,context_file)
     # feishu_bot(f'wordforword for {project}.{filetype} processed')
 
 # wordforword to memo
@@ -110,7 +108,7 @@ os.makedirs(f'{base_path}/3_memo/', exist_ok=True)
 current_files=[f for f in os.listdir(f'{base_path}/3_memo/') if f.startswith(project)]
 
 if len(current_files)==0 or input_refresh:
-    wordforword_to_memo(project)
+    wordforword_to_memo(project,context_file)
     # feishu_bot(f'memo for {project}.{filetype} processed')
 
 # combine to docx
