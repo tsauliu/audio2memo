@@ -49,7 +49,11 @@ client = genai.Client(api_key=gemini_key)
 
 def gemini_model(prompt,content):
     response = client.models.generate_content(
-        model="gemini-2.5-pro-preview-03-25", contents=prompt+'\n -- \n'+content #gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25
+        model="gemini-2.5-pro-preview-03-25",
+        generation_config={
+        "temperature": 0.3  # 这里调整 temperature 值
+        }, 
+        contents=prompt+'\n -- \n'+content #gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25
     )
     return response.text
 

@@ -9,7 +9,7 @@ base_path=os.path.expanduser(base_path)
 
 allfiles=os.listdir(os.path.expanduser(f'~/Dropbox/VoiceMemos/'))
 # 按照修改时间排序文件，过滤掉.docx文件
-allfiles = [f for f in allfiles if not f.endswith('.docx')]
+allfiles = [f for f in allfiles if f.endswith(('.m4a', '.mp3'))]
 allfiles.sort(key=lambda f: os.path.getmtime(os.path.join(os.path.expanduser('~/Dropbox/VoiceMemos/'), f)), reverse=True)
 for i in range(len(allfiles)):
     print(f'{i+1}. {allfiles[i]}')

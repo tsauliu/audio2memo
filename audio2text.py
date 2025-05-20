@@ -17,7 +17,8 @@ def audio2text(filename, project, client, input_model):
         with open(audio_filepath, "rb") as audio_file:
             transcript = client.audio.transcriptions.create(
                 model=input_model, #gpt-4o-mini-transcribe / gpt-4o-transcribe / whisper-1
-                file=audio_file
+                file=audio_file,
+                temperature=0.2
             )
         
         with open(transcript_filepath, "w", encoding="utf-8") as f:

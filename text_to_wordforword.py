@@ -8,7 +8,7 @@ def text_to_wordforword(project):
     transcript_length=len(combined_transcript)
     wordcountmin=round(transcript_length/1.5/1000)*1000
     wordcountmax=round(transcript_length/1000)*1000
-    prompt=open('prompt/prompt_audio2word.md','r',encoding='utf-8').read()
+    prompt=open('prompt/prompt_meetingmemo.md','r',encoding='utf-8').read()
     context=open(f'context/{project}.md','r',encoding='utf-8').read()
     # prompt=open('prompt/prompt_audio2word_gemini.md','r',encoding='utf-8').read()
     prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))+context
