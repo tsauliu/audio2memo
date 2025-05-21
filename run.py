@@ -24,7 +24,7 @@ filetype = filename.rsplit('.', 1)[1]
 # choose context file
 allcontexts = os.listdir(f'{base_path}/context/')
 allcontexts = [f for f in allcontexts if f.endswith('.md')]
-allcontexts.sort()
+allcontexts.sort(reverse=True)
 for i in range(len(allcontexts)):
     print(f'{i+1}. {allcontexts[i]}')
 
@@ -34,7 +34,7 @@ context_file = f'{base_path}/context/{allcontexts[int(input_context)-1]}' if inp
 # choose prompt file
 allprompts = os.listdir(f'{base_path}/prompt/')
 allprompts = [f for f in allprompts if f.endswith('.md') and not f.startswith('prompt_highlevel')]
-allprompts.sort()
+allprompts.sort(reverse=True)
 
 for i in range(len(allprompts)):
     print(f'{i+1}. {allprompts[i]}')
@@ -71,8 +71,6 @@ elif input_model_num==4:
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
 dropbox_path=os.path.expanduser(dropbox_path)
-
-
 
 raw_audio_path=f'./0_raw_audio/{project}.{filetype}'
 os.makedirs(os.path.dirname('./0_raw_audio/'), exist_ok=True)
@@ -113,12 +111,13 @@ if not len(current_files)==0 or input_refresh:
     # feishu_bot(f'wordforword for {project}.{filetype} processed')
 
 # wordforword to memo
-from wordforword_to_memo import wordforword_to_memo
-os.makedirs(f'{base_path}/3_memo/', exist_ok=True)
-current_files=[f for f in os.listdir(f'{base_path}/3_memo/') if f.startswith(project)]
+if "transcript" not in prompt_file:
+    from wordforword_to_memo import wordforword_to_memo
+    os.makedirs(f'{base_path}/3_memo/', exist_ok=True)
+    current_files=[f for f in os.listdir(f'{base_path}/3_memo/') if f.startswith(project)]
 
-if len(current_files)==0 or input_refresh:
-    wordforword_to_memo(project,context_file)
+    if len(current_files)==0 or input_refresh:
+        wordforword_to_memo(project,context_file)
     # feishu_bot(f'memo for {project}.{filetype} processed')
 
 # combine to docx

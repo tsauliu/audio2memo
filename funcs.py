@@ -10,6 +10,7 @@ def groq_transcribe(audio_filepath,transcript_filepath):
         file=(audio_filepath, file.read()),
         model="whisper-large-v3-turbo",
         response_format="verbose_json",
+        temperature=0,
         )
 
     with open(transcript_filepath, "w", encoding="utf-8") as f:
@@ -87,10 +88,10 @@ from env import gemini_key
 client = genai.Client(api_key=gemini_key)
 
 def gemini_model(prompt,content):
-    model="gemini-2.5-pro-preview-05-06",#gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25，gemini-2.5-flash-preview-05-20
-    print(f'{model} is used')
+    modelname="gemini-2.5-pro-preview-05-06" #gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25，gemini-2.5-flash-preview-05-20
+    print(f'{modelname} is used')
     response = client.models.generate_content(
-        model=model,
+        model=modelname,
         config=types.GenerateContentConfig(
         temperature=0.3
         ) , 

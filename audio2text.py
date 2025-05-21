@@ -57,6 +57,6 @@ def process_audio_files(project, input_model):
 
 # Example usage:
 if __name__ == "__main__":
-    project_name = 'pony 1q25'
+    project_name = 'lingqi 面试2'
     input_model='whisper-large-v3-turbo'
     process_audio_files(project_name, input_model)
