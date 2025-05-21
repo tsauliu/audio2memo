@@ -1,28 +1,19 @@
 #%%
-from openai import OpenAI
-from env import keysecret
+from funcs import openai_transcribe,groq_transcribe
 import os
 import datetime
-client = OpenAI(
-    api_key=keysecret
-)
 
-def audio2text(filename, project, client, input_model):
+def audio2text(filename, project,input_model):
     audio_filepath = os.path.join("./0_processed_audio", project, filename)
     transcript_dir = os.path.join("./1_transcript", project)
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     transcript_filepath = os.path.join(transcript_dir, f"{filename}_{timestamp}.txt")
-
+    print(f"Processing: {filename}")
     try:
-        with open(audio_filepath, "rb") as audio_file:
-            transcript = client.audio.transcriptions.create(
-                model=input_model, #gpt-4o-mini-transcribe / gpt-4o-transcribe / whisper-1
-                file=audio_file,
-                temperature=0.2
-            )
-        
-        with open(transcript_filepath, "w", encoding="utf-8") as f:
-            f.write(transcript.text)
+        if input_model == 'whisper-large-v3-turbo':
+            groq_transcribe(audio_filepath,transcript_filepath)
+        else:
+            openai_transcribe(audio_filepath,transcript_filepath,input_model)
         print(f"Processed: {filename}")
     except FileNotFoundError:
         print(f"Error: Audio file not found at {audio_filepath}")
@@ -58,7 +49,7 @@ def process_audio_files(project, input_model):
 
     # Process files sequentially
     for filename in audio_files:
-        audio2text(filename, project, client, input_model) # Pass client if needed
+        audio2text(filename, project,input_model) # Pass client if needed
 
     timeend = datetime.datetime.now()
     print(f'End time: {timeend}')
@@ -66,6 +57,6 @@ def process_audio_files(project, input_model):
 
 # Example usage:
 if __name__ == "__main__":
-    project_name = 'catl 4 21 发布会'
-    input_model='gpt-4o-mini-transcribe'
+    project_name = 'pony 1q25'
+    input_model='whisper-large-v3-turbo'
     process_audio_files(project_name, input_model)

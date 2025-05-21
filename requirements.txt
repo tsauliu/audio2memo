@@ -9,3 +9,4 @@ pandas
 python-docx
 dropbox
 boto3
+groq

@@ -11,6 +11,7 @@ def wordforword_to_memo(project,contextfile):
     
     print(f"Memo Total input tokens: {count_tokens(prompt)+count_tokens(combined_transcript)}")
     print(prompt+context)
+    print(project)
     
     summarytext=gemini_model(prompt+context,combined_transcript)
 
@@ -21,4 +22,6 @@ def wordforword_to_memo(project,contextfile):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    wordforword_to_memo(project='pony')
+    project='pony 1q25'
+    contextfile='context/auto.md'
+    wordforword_to_memo(project,contextfile)

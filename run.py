@@ -53,7 +53,7 @@ prompt_file = f'{base_path}/prompt/{allprompts[int(input_prompt)-1]}' if input_p
 #     input_refresh=False
 
 input_refresh=True
-input_model_num=input('model? (1.GPT-4o-transcribe (default), 2.GPT-4o-mini-transcribe, 3.Whisper-1): ')
+input_model_num=input('model? (1.whisper-large-v3-turbo(default) 2.GPT-4o-transcribe 3.GPT-4o-mini-transcribe 4.Whisper-1): ')
 
 if input_model_num=='':
     input_model_num=1
@@ -61,10 +61,12 @@ else:
     input_model_num=int(input_model_num)
 
 if input_model_num==1:
-    input_model='gpt-4o-transcribe'
+    input_model='whisper-large-v3-turbo'
 elif input_model_num==2:
-    input_model='gpt-4o-mini-transcribe'
+    input_model='gpt-4o-transcribe'
 elif input_model_num==3:
+    input_model='gpt-4o-mini-transcribe'
+elif input_model_num==4:
     input_model='whisper-1'
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'
@@ -107,7 +109,7 @@ from text_to_wordforword import text_to_wordforword
 os.makedirs('./2_wordforword/', exist_ok=True)
 current_files=[f for f in os.listdir('./2_wordforword/') if f.startswith(project)]
 if not len(current_files)==0 or input_refresh:
-    text_to_wordforword(project,context_file)
+    text_to_wordforword(project,context_file,prompt_file)
     # feishu_bot(f'wordforword for {project}.{filetype} processed')
 
 # wordforword to memo
@@ -116,7 +118,7 @@ os.makedirs(f'{base_path}/3_memo/', exist_ok=True)
 current_files=[f for f in os.listdir(f'{base_path}/3_memo/') if f.startswith(project)]
 
 if len(current_files)==0 or input_refresh:
-    wordforword_to_memo(project,context_file,promptfile)
+    wordforword_to_memo(project,context_file)
     # feishu_bot(f'memo for {project}.{filetype} processed')
 
 # combine to docx

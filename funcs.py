@@ -1,4 +1,42 @@
+#%%
+import os
+from env import groq_key
+from groq import Groq
+
+def groq_transcribe(audio_filepath,transcript_filepath):
+    client = Groq(api_key=groq_key)
+    with open(audio_filepath, "rb") as file:
+        transcription = client.audio.transcriptions.create(
+        file=(audio_filepath, file.read()),
+        model="whisper-large-v3-turbo",
+        response_format="verbose_json",
+        )
+
+    with open(transcript_filepath, "w", encoding="utf-8") as f:
+        for segment in transcription.segments:
+            f.write(segment['text']+'\n')
+
 # %%
+from openai import OpenAI
+from env import keysecret
+
+
+def openai_transcribe(audio_filepath,transcript_filepath,input_model):
+    client = OpenAI(
+        api_key=keysecret
+    )
+
+    with open(audio_filepath, "rb") as audio_file:
+        transcript = client.audio.transcriptions.create(
+            model=input_model, #gpt-4o-mini-transcribe / gpt-4o-transcribe / whisper-1
+            file=audio_file,
+            # temperature=0.2
+        )
+            
+    with open(transcript_filepath, "w", encoding="utf-8") as f:
+        f.write(transcript.text)
+
+
 
 import os
 import tiktoken

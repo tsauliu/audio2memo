@@ -8,6 +8,7 @@ from funcs import save_transcript_to_oss
 todaydate=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
 def combine_to_docx(project):
+    print(project)
     doc = Document('formart_new.docx')
     summary_md=open(next((f'./3_memo/{f}' for f in sorted(os.listdir('./3_memo/'), reverse=True) if f.startswith(project)), f'./3_memo/{project}.txt'), 'r', encoding='utf-8').read()
     lines = summary_md.strip().split('\n')
@@ -65,5 +66,5 @@ def combine_to_docx(project):
         save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}.md'),f'{project}.md')
         
 if __name__ == '__main__':
-    project='pony 4q24 earnings'
+    project='pony 1q25'
     combine_to_docx(project)
