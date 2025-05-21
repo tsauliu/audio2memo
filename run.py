@@ -30,6 +30,7 @@ for i in range(len(allcontexts)):
 
 input_context = input("Enter context number (press Enter to skip): ")
 context_file = f'{base_path}/context/{allcontexts[int(input_context)-1]}' if input_context else f'{base_path}/context/default.md'
+print(f'using context: {context_file}')
 
 # choose prompt file
 allprompts = os.listdir(f'{base_path}/prompt/')
@@ -40,7 +41,8 @@ for i in range(len(allprompts)):
     print(f'{i+1}. {allprompts[i]}')
 
 input_prompt = input("Enter prompt number (press Enter to skip): ")
-prompt_file = f'{base_path}/prompt/{allprompts[int(input_prompt)-1]}' if input_prompt else f'{base_path}/prompt/prompt_meetingmemo.md'
+prompt_file = f'{base_path}/prompt/{allprompts[int(input_prompt)-1]}' if input_prompt else f'{base_path}/prompt/prompt_transcript.md'
+print(f'using prompt: {prompt_file}')
 
 #%%
 
@@ -53,7 +55,7 @@ prompt_file = f'{base_path}/prompt/{allprompts[int(input_prompt)-1]}' if input_p
 #     input_refresh=False
 
 input_refresh=True
-input_model_num=input('model? (1.whisper-large-v3-turbo(default) 2.GPT-4o-transcribe 3.GPT-4o-mini-transcribe 4.Whisper-1): ')
+input_model_num=input('model? (1.whisper-large-v3-turbo(default) 2.whisper-large-v3 3.GPT-4o-transcribe 4.GPT-4o-mini-transcribe 5.Whisper-1): ')
 
 if input_model_num=='':
     input_model_num=1
@@ -63,10 +65,12 @@ else:
 if input_model_num==1:
     input_model='whisper-large-v3-turbo'
 elif input_model_num==2:
-    input_model='gpt-4o-transcribe'
+    input_model='whisper-large-v3'
 elif input_model_num==3:
-    input_model='gpt-4o-mini-transcribe'
+    input_model='gpt-4o-transcribe'
 elif input_model_num==4:
+    input_model='gpt-4o-mini-transcribe'
+elif input_model_num==5:
     input_model='whisper-1'
 #copyfile
 dropbox_path=f'~/Dropbox/VoiceMemos/{project}.{filetype}'

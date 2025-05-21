@@ -3,12 +3,12 @@ import os
 from env import groq_key
 from groq import Groq
 
-def groq_transcribe(audio_filepath,transcript_filepath):
+def groq_transcribe(audio_filepath,transcript_filepath,input_model):
     client = Groq(api_key=groq_key)
     with open(audio_filepath, "rb") as file:
         transcription = client.audio.transcriptions.create(
         file=(audio_filepath, file.read()),
-        model="whisper-large-v3-turbo",
+        model=input_model, #whisper-large-v3,whisper-large-v3-turbo
         response_format="verbose_json",
         temperature=0,
         )

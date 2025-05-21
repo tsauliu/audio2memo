@@ -10,8 +10,8 @@ def audio2text(filename, project,input_model):
     transcript_filepath = os.path.join(transcript_dir, f"{filename}_{timestamp}.txt")
     print(f"Processing: {filename}")
     try:
-        if input_model == 'whisper-large-v3-turbo':
-            groq_transcribe(audio_filepath,transcript_filepath)
+        if 'whisper-large-v3' in input_model:
+            groq_transcribe(audio_filepath,transcript_filepath,input_model)
         else:
             openai_transcribe(audio_filepath,transcript_filepath,input_model)
         print(f"Processed: {filename}")
@@ -57,6 +57,6 @@ def process_audio_files(project, input_model):
 
 # Example usage:
 if __name__ == "__main__":
-    project_name = 'lingqi 面试2'
-    input_model='whisper-large-v3-turbo'
+    project_name = 'weride 1q25'
+    input_model='whisper-large-v3'
     process_audio_files(project_name, input_model)
