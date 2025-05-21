@@ -9,8 +9,8 @@ def wordforword_to_memo(project,contextfile):
     prompt=open('./prompt/prompt_highlevelsummary.md','r',encoding='utf-8').read()
     context=open(contextfile,'r',encoding='utf-8').read()
     
-    print(f"Memo Total input tokens: {count_tokens(prompt)+count_tokens(combined_transcript)}")
     print(prompt+context)
+    print(f"Memo Total input tokens: {count_tokens(prompt)+count_tokens(combined_transcript)}")
     print(project)
     
     summarytext=gemini_model(prompt+context,combined_transcript)

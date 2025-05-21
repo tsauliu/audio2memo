@@ -87,23 +87,26 @@ from env import gemini_key
 client = genai.Client(api_key=gemini_key)
 
 def gemini_model(prompt,content):
+    model="gemini-2.5-pro-preview-05-06",#gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25，gemini-2.5-flash-preview-05-20
+    print(f'{model} is used')
     response = client.models.generate_content(
-        model="gemini-2.5-pro-preview-03-25",
+        model=model,
         config=types.GenerateContentConfig(
         temperature=0.3
         ) , 
-        contents=prompt+'\n -- \n'+content #gemini-2.5-pro-preview-05-06，gemini-2.5-pro-preview-03-25
+        contents=prompt+'\n -- \n'+content 
     )
     return response.text
 
 def feishu_bot(message):
     import requests
     import json
-    
+    import datetime
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     payload_message = {
         "msg_type": "text",
         "content": {
-            "text": message
+            "text": message+f'\n {timestamp}'
             }
         }
     headers = {

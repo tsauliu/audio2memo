@@ -12,9 +12,9 @@ def text_to_wordforword(project,contextfile,promptfile):
     context=open(contextfile,'r',encoding='utf-8').read()
     # prompt=open('prompt/prompt_audio2word_gemini.md','r',encoding='utf-8').read()
     prompt=prompt.replace('{wordcountmin}',str(wordcountmin)).replace('{wordcountmax}',str(wordcountmax))+context
-    print(f"Wordforword Total input tokens: {count_tokens(prompt)+transcript_length}")
     # summarytext=deepseek_model(prompt,combined_transcript)
     print(prompt)
+    print(f"Wordforword Total input tokens: {count_tokens(prompt)+transcript_length}")
     summarytext=gemini_model(prompt,combined_transcript)
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -24,7 +24,7 @@ def text_to_wordforword(project,contextfile,promptfile):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    project='pony 4q24 earnings'
+    project='pony 1q25'
     contextfile='context/auto.md'
     promptfile='prompt/prompt_earningscall.md'
     text_to_wordforword(project,contextfile,promptfile)
