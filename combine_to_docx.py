@@ -9,7 +9,7 @@ todaydate=datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
 
 def combine_to_docx(project):
     print(project)
-    doc = Document('formart_new.docx')
+    doc = Document('format_new.docx')
     # Check if there's a matching summary md file
     summary_files = [f for f in sorted(os.listdir('./3_memo/'), reverse=True) if f.startswith(project)]
     if len(summary_files)>0:
@@ -66,9 +66,17 @@ def combine_to_docx(project):
                 else:
                     file.write(line+'\n')
         file.write(f'\n# Full Discussion\n')
-        file.write(raw_md)
+        for line in raw_md.strip().split('\n'):
+            if line.startswith('%'):
+                file.write('## '+line[1:]+'\n')
+            elif line.startswith('$'):
+                file.write('### '+line[1:]+'\n')
+            elif line.startswith('&'):
+                file.write(line[1:]+'\n')
+            else:
+                file.write(line+'\n')
         save_transcript_to_oss(os.path.expanduser(f'./5_markdown/{filename}.md'),f'{project}.md')
         
 if __name__ == '__main__':
-    project='lingqi 面试2'
+    project='weride 1q25 pc'
     combine_to_docx(project)

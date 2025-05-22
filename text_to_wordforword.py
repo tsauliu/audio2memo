@@ -24,8 +24,8 @@ def text_to_wordforword(project,contextfile,promptfile):
         f.write(summarytext)
 
 if __name__ == '__main__':
-    project='pony 1q25'
-    contextfile='context/auto.md'
-    promptfile='prompt/prompt_earningscall.md'
+    project='weride 1q25 pc'
+    contextfile='context/default.md'
+    promptfile='prompt/prompt_meetingmemo.md'
     text_to_wordforword(project,contextfile,promptfile)
 #%%
