@@ -99,7 +99,7 @@ def gemini_model(prompt,content):
     )
     return response.text
 
-def feishu_bot(message):
+def feishu_bot(message,msgtype='default'):
     import requests
     import json
     import datetime
@@ -116,6 +116,8 @@ def feishu_bot(message):
 
     # 定义飞书机器人 URL
     url = "https://open.feishu.cn/open-apis/bot/v2/hook/36473a8e-3bf1-40bd-9115-3385e314bf74"  # 替换为你的飞书机器人 URL
+    if msgtype=='unmute':
+        url = "https://open.feishu.cn/open-apis/bot/v2/hook/b0093709-8c9a-4cab-90c2-5b1f9b784691"  # 替换为你的飞书机器人 URL
     response = requests.request("POST", url, headers=headers, data=json.dumps(payload_message))
     return response.text
 

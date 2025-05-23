@@ -130,4 +130,4 @@ os.makedirs(f'{base_path}/4_docx/', exist_ok=True)
 current_files=[f for f in os.listdir(f'{base_path}/4_docx/') if f.startswith(project)]
 if len(current_files)==0 or input_refresh:
     combine_to_docx(project)
-    feishu_bot(f'docx for {project}.{filetype} processed')
+    feishu_bot(f'docx for {project}.{filetype} processed',msgtype='unmute')
